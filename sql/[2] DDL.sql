@@ -8,8 +8,8 @@ CREATE TABLE tbl_user (
 );
 
 CREATE TABLE tbl_user_role_set (
-    email    VARCHAR2(255) NOT NULL,
+    user_email    VARCHAR2(255) NOT NULL,
     role_set VARCHAR2(255),
-    CONSTRAINT fk_role_set FOREIGN KEY ( email )
+    CONSTRAINT fk_role_set FOREIGN KEY ( user_email )
         REFERENCES tbl_user ( email )
 );
