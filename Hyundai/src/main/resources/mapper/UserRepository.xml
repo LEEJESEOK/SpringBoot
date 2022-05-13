@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.repository.UserRepository">
+    <insert id="insertUser">
+        INSERT INTO tbl_user (email,
+                              password,
+                              name,
+                              social)
+        VALUES (#{email}, #{password}, #{name}, #{socialIdx})
+    </insert>
+    <insert id="insertUserRoleSet">
+        INSERT INTO tbl_user_role_set (user_email,
+                                       role_set)
+        VALUES (#{userEmail},
+                #{roleSet})
+    </insert>
+
+    <select id="selectUserByEmail" resultType="User">
+        select *
+        from tbl_user
+        where email = #{email}
+    </select>
+
+    <resultMap id="UserRoleSetMap" type="UserRoleSet">
+        <result column="user_email" property="userEmail"/>
+        <result column="role_set" property="roleSet"/>
+    </resultMap>
+    <select id="selectUserRoleSetByEmail" resultMap="UserRoleSetMap">
+        select *
+        from tbl_user_role_set
+        where user_email = #{userEmail}
+    </select>
+
+    <select id="selectUserByLogin" resultType="boolean">
+        SELECT CASE
+                   WHEN COUNT(*) = 0 THEN
+                       'FALSE'
+                   ELSE
+                       'TRUE'
+                   END AS isexist
+        FROM tbl_user
+        WHERE email = #{email}
+          AND password = #{password}
+    </select>
+
+    <update id="updateUser">
+        UPDATE tbl_user
+        SET password = #{password},
+            name=#{name}
+        WHERE email = #{email}
+    </update>
+
+    <update id="updateUserRoleSet">
+        UPDATE tbl_user_role_set
+        SET role_set = #{roleSet}
+        WHERE user_email = #{userEmail}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE
+        FROM tbl_user
+        WHERE email = #{email}
+    </delete>
+
+
+    <!--    <delete id="deleteUserRoleSet">-->
+    <!--        DELETE-->
+    <!--        FROM tbl_user_role_set-->
+    <!--        WHERE user_email = #{userEmail}-->
+    <!--    </delete>-->
+</mapper>
