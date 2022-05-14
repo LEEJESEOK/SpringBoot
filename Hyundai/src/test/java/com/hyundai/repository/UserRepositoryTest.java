@@ -7,8 +7,10 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,12 +30,15 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @BeforeAll
     static void setUp() {
         email = "test" + new Date().getTime();
-        password = "password";
+        password = "test";
         name = "테스트";
-        roleSet = UserRole.ROLE_USER.toString();
+        roleSet = UserRole.USER.toString();
     }
 
     @Order(0)
@@ -67,15 +72,15 @@ class UserRepositoryTest {
     @Order(20)
     @Test
     void selectUserByEmail() {
-        User user = repository.selectUserByEmail(email);
+        User user = repository.selectUserByEmail("test");
         log.info(user);
         assertNotNull(user);
     }
 
     @Order(21)
     @Test
-    void selectUserRoleSetByEmail() {
-        UserRoleSet userRoleSet = repository.selectUserRoleSetByEmail(email);
+    void selectUserRoleSetsByEmail() {
+        List<UserRoleSet> userRoleSet = repository.selectUserRoleSetsByEmail(email);
         log.info(userRoleSet);
         assertNotNull(userRoleSet);
     }
@@ -100,11 +105,11 @@ class UserRepositoryTest {
     @Order(31)
     @Test
     void updateUserRoleSet() {
-        UserRoleSet userRoleSet = repository.selectUserRoleSetByEmail(email);
-        userRoleSet.setRoleSet(UserRole.ROLE_ADMIN.toString());
+        List<UserRoleSet> userRoleSet = repository.selectUserRoleSetsByEmail(email);
+        userRoleSet.get(0).setRoleSet(UserRole.ADMIN.toString());
 
-        assertEquals(1, repository.updateUserRoleSet(userRoleSet));
-        log.info(repository.selectUserRoleSetByEmail(email));
+        assertEquals(1, repository.updateUserRoleSet(userRoleSet.get(0)));
+        log.info(repository.selectUserRoleSetsByEmail(email));
     }
 
 //    @Order(98)
@@ -118,5 +123,30 @@ class UserRepositoryTest {
     @Test
     void deleteUser() {
         assertEquals(1, repository.deleteUser(email));
+    }
+
+    @Test
+    void insertDummies() {
+        for (int i = 1; i <= 100; ++i) {
+            String dummyEmail = "test" + i + "@hyundai.com";
+
+            User user = new User();
+            user.setEmail(dummyEmail);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setName("테스트" + i);
+            user.setSocial(0);
+
+            repository.insertUser(user);
+
+
+            UserRoleSet userRoleSet = new UserRoleSet();
+            userRoleSet.setUserEmail(dummyEmail);
+            String role = UserRole.USER.name();
+            if (i > 90)
+                role = UserRole.ADMIN.name();
+            userRoleSet.setRoleSet(role);
+
+            repository.insertUserRoleSet(userRoleSet);
+        }
     }
 }

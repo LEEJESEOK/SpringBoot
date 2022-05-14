@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * User 권한을 저장하는 클래스
+ * 사용자 권한을 저장하는 클래스
  *
  * @author LEE JESEOK
  */

@@ -5,6 +5,8 @@ import com.hyundai.entity.User;
 import com.hyundai.entity.UserRoleSet;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * User SQL 처리
  *
@@ -43,7 +45,7 @@ public interface UserRepository {
      * @param email
      * @return 조회한 UserRoleSet
      */
-    UserRoleSet selectUserRoleSetByEmail(String email);
+    List<UserRoleSet> selectUserRoleSetsByEmail(String email);
 
     /**
      * email, password 해당하는 User 확인

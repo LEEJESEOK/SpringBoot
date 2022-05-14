@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.repository.UserRepository">
+
     <insert id="insertUser">
         INSERT INTO tbl_user (email,
                               password,
                               name,
                               social)
-        VALUES (#{email}, #{password}, #{name}, #{socialIdx})
+        VALUES (#{email}, #{password}, #{name}, #{social})
     </insert>
+
     <insert id="insertUserRoleSet">
         INSERT INTO tbl_user_role_set (user_email,
                                        role_set)
@@ -15,17 +17,24 @@
                 #{roleSet})
     </insert>
 
-    <select id="selectUserByEmail" resultType="User">
+    <resultMap id="UserMap" type="User">
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="regDate" column="regDate"/>
+        <result property="social" column="social"/>
+    </resultMap>
+    <select id="selectUserByEmail" resultMap="UserMap">
         select *
         from tbl_user
         where email = #{email}
     </select>
 
     <resultMap id="UserRoleSetMap" type="UserRoleSet">
-        <result column="user_email" property="userEmail"/>
-        <result column="role_set" property="roleSet"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="roleSet" column="role_set"/>
     </resultMap>
-    <select id="selectUserRoleSetByEmail" resultMap="UserRoleSetMap">
+    <select id="selectUserRoleSetsByEmail" resultMap="UserRoleSetMap">
         select *
         from tbl_user_role_set
         where user_email = #{userEmail}
