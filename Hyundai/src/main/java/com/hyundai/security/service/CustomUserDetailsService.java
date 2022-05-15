@@ -5,7 +5,6 @@ import com.hyundai.entity.UserRoleSet;
 import com.hyundai.repository.UserRepository;
 import com.hyundai.security.dto.AuthUserDTO;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +21,11 @@ import java.util.List;
 @Service
 @Log4j2
 public class CustomUserDetailsService implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,10 +40,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         AuthUserDTO authUserDTO = new AuthUserDTO(user.getEmail(), user.getPassword(), user.getSocial(), authorities);
+        authUserDTO.setPassword(user.getPassword());
         authUserDTO.setName(user.getName());
 
-        log.info("authUserDTO : " + authUserDTO);
 
         return authUserDTO;
     }
+
+
 }

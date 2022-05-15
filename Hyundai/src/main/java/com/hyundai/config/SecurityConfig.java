@@ -1,11 +1,16 @@
 package com.hyundai.config;
 
 import com.hyundai.entity.UserRole;
+import com.hyundai.security.handler.LoginSuccessHandler;
+import com.hyundai.security.service.CustomUserDetailsService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -29,10 +34,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return roleHierarchyImpl;
 //    }
 
+    // Password Encoder
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // LoginSuccess Handler
+    @Bean
+    LoginSuccessHandler successHandler() {
+        return new LoginSuccessHandler(passwordEncoder());
+    }
+
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -44,11 +59,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 로그인 성공시 루트로 이동
         http.formLogin();
-
+        // 로그아웃 설정
+        http.logout();
         // csrf 설정
         http.csrf().disable();
 
-        // 로그아웃 설정
-        http.logout();
+        // 소셜 로그인 success handler 등록
+        http.oauth2Login().successHandler(successHandler());
+
+        // 1주일(초)
+        http.rememberMe()
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                .userDetailsService(userDetailsService);
     }
 }

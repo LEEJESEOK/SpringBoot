@@ -132,7 +132,7 @@ class UserRepositoryTest {
 
             User user = new User();
             user.setEmail(dummyEmail);
-            user.setPassword(passwordEncoder.encode(password));
+            user.setPassword(passwordEncoder.encode("1111"));
             user.setName("테스트" + i);
             user.setSocial(0);
 

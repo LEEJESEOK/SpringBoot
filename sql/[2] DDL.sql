@@ -1,7 +1,7 @@
 CREATE TABLE tbl_user (
     email    VARCHAR2(255),
     password VARCHAR2(255) NOT NULL,
-    name     VARCHAR2(20) NOT NULL,
+    name     VARCHAR2(255) NOT NULL,
     regdate  DATE DEFAULT sysdate,
     social   NUMBER(1),
     CONSTRAINT pk_user PRIMARY KEY ( email )
