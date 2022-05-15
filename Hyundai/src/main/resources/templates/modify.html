@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>구글 사용자</h1>
+<h2 sec:authorize="hasRole('ADMIN')">Admin User</h2>
+<h2 sec:authorize="hasRole('USER')">User</h2>
+<div>
+    <h3 sec:authorize="isAuthenticated()">Only Authenticated user can see this Text</h3>
+</div>
+
+<div>
+    <b> Authenticated DTO : </b>
+    <div sec:authentication="principal"></div>
+
+    <b> Authenticated username : </b>
+    <div sec:authentication="name"></div>
+    <div th:text="${#authentication.name}"></div>
+
+    <b> Authenticated user role set : </b>
+    <div sec:authentication="principal.authorities"></div>
+</div>
+</body>
+</html>
