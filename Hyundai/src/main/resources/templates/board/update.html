@@ -37,6 +37,20 @@
 </th:block>
 <script>
 	var bno = $('#bno').text();
+	get(bno);
+	
+	// 게시물 조회
+	function get(bno){
+		$.ajax({
+			type:"get",
+			url:"/articles/" + bno,			
+			success:function(article){
+				document.getElementById("btitle").value = article.btitle
+				document.getElementById("bname").value = article.bname
+				document.getElementById("bcontent").value = article.bcontent
+			}
+		});
+	}
 	
 	$("#ModifyBtn").click(function(){			
 		var btitle = $("#btitle").val();
