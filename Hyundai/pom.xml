@@ -18,6 +18,13 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+    	
+    	<dependency>
+            	<groupId>commons-codec</groupId>
+            	<artifactId>commons-codec</artifactId>
+            	<version>1.15</version>
+    	</dependency>
+    	
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
@@ -43,7 +50,13 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
-
+        <!-- LocalDate, LocalDateTime 처리 -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-java8time</artifactId>
+			<version>3.0.4.RELEASE</version>
+		</dependency>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -75,6 +88,12 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- CSRF 토큰 -->
+        <dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-taglibs</artifactId>
+    	</dependency>
+    	
     </dependencies>
 
     <build>

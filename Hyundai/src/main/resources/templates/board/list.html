@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+		<th:block th:fragment="content">
+			<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
+				</br></br>
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-6 text-center mb-5">
+							<h2 class="heading-section">게시판</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-wrap">
+								<table class="table">
+								  <thead class="thead-dark">
+								    <tr>
+								      <th>글 번호</th>
+								      <th>글 제목</th>
+								      <th>작성자</th>
+								      <th>작성 날짜</th>
+								      <th>조회수</th>
+								    </tr>
+								  </thead>
+								  <tbody id = "board">
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+		</th:block>
+</th:block>
+<script>
+	getList();
+	
+	function getList(){
+		$.getJSON("/articles", function(data){
+			console.log(data);
+			var str = "";
+			$(data).each(
+				function(index, item){
+					str += "<tr>"
+						+ "<td>" + item.bno + "</td>"
+						+ "<td style=\"cursor:pointer; text-decoration:underline\" onclick=\"location.href=get(" + item.bno + ");\">" + item.btitle + "</td>"
+						+ "<td>" + item.bname + "</td>"
+						+ "<td>" + item.bregdate + "</td>"
+						+ "<td>" + item.breadcount + "</td>"
+						+ "</tr>"
+				});
+			console.log(str);
+			$("#board").html(str);
+		});
+	}
+	
+	function get(bno){
+		$.ajax({
+			type:"get",
+			url:"/articles/" + bno,				
+			success:function(article){
+				location.href='/board/detail?bno='+bno;
+			}
+		});//ajax
+	}
+</script>

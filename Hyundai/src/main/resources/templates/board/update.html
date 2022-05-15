@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+	<th:block th:fragment="content">
+		<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
+		</br></br>
+		<span style="display:none" id="bno" th:utext="${bno}"></span>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">글 수정</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table">
+							<tr>
+								<th >제목</th>
+								<td><input type="text" id="btitle" style="width:700px" placeholder="제목 입력"/></td>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td><input type="text" id="bname" style="width:700px" placeholder="작성자 입력"/></td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td><textarea id="bcontent" cols="40" style="width:700px;height:200px" placeholder="내용 입력"></textarea></td>
+							</tr>
+						</table>
+						<button id="ModifyBtn">Modify Article</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</th:block>
+<script>
+	var bno = $('#bno').text();
+	
+	$("#ModifyBtn").click(function(){			
+		var btitle = $("#btitle").val();
+	    var bname = $("#bname").val();
+	    var bcontent = $("#bcontent").val();
+	
+	    $.ajax({
+	        type: 'put',
+	        url:"/articles/" + bno,	
+	        headers: {
+	        	"Content-Type": "application/json",
+	            "X-HTTP-Method-Override": "PUT"
+	        },
+	        dataType: 'text',
+	        data: JSON.stringify({
+	        	bno: bno,
+	            bname: bname,
+	            btitle: btitle,
+	            bcontent: bcontent
+	        }),
+	        success: function (result) {
+	            console.log(result);
+	            if (result == 'SUCCESS') {
+	                alert("글 수정 완료");
+	                location.href='/board/list';
+	            }
+	            else{
+	            	alert("글 수정 실패");
+	            }
+	        }
+	    });
+	});	
+</script>

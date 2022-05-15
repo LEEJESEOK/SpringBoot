@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+	<th:block th:fragment="content">
+		<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
+		</br></br>
+		<span style="display:none" id ="bno" th:utext="${bno}"></span>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">글 조회</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th>글 번호</th>
+						      <th>글 제목</th>
+						      <th>작성자</th>
+						      <th>글 내용</th>
+						      <th>작성일</th>
+						      <th>조회수</th>
+						    </tr>
+						  </thead>
+						  <tbody id = "detail">
+						  </tbody>
+						</table>
+						<input type="button" value="삭제" id="DeleteBtn">
+						<input type="button" value="수정" id="ModifyBtn">
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</th:block>
+<script>
+	var bno = $('#bno').text();
+	var str = "";
+	get(bno);
+	
+	// 게시물 조회
+	function get(bno){
+		$.ajax({
+			type:"get",
+			url:"/articles/" + bno,			
+			success:function(article){
+				str += "<tr>"
+					+ "<td>" + article.bno + "</td>"
+					+ "<td>" + article.btitle + "</td>"
+					+ "<td>" + article.bname + "</td>"
+					+ "<td>" + article.bcontent + "</td>"
+					+ "<td>" + article.bregdate + "</td>"
+					+ "<td>" + article.breadcount + "</td>"
+					+ "</tr>"
+				$("#detail").html(str);
+			}
+		});
+	}
+	
+	// 게시물 삭제
+	$("#DeleteBtn").click(function(){			
+		$.ajax({
+			type:"delete",
+			url:"/articles/"+ bno,
+			success:function(){
+				alert("글 삭제 완료");
+				location.href='/board/list';
+			}
+		});
+	});
+	
+	// 게시물 수정
+	$("#ModifyBtn").click(function(){			
+		location.href='/board/update?bno='+bno;
+	});
+</script>
