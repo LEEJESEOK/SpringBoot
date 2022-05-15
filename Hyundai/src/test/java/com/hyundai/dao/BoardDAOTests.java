@@ -49,5 +49,12 @@ public class BoardDAOTests {
 	public void testDeleteArticle() {
 		boardDAO.deleteArticle(3);
 	}
+	
+	@Test
+	public void testUpdateReadCount() {
+		boardDAO.updateReadCount(1);
+		boardDAO.updateReadCount(1);
+		boardDAO.updateReadCount(1);
+	}
 		
 }

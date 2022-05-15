@@ -28,6 +28,7 @@
 								<td><textarea id="bcontent" cols="40" style="width:700px;height:200px" placeholder="내용 입력"></textarea></td>
 							</tr>
 						</table>
+						<input type="hidden" id ="breadcount"/>
 						<button id="ModifyBtn">Modify Article</button>
 					</div>
 				</div>
@@ -48,6 +49,7 @@
 				document.getElementById("btitle").value = article.btitle
 				document.getElementById("bname").value = article.bname
 				document.getElementById("bcontent").value = article.bcontent
+				document.getElementById("breadcount").value = article.breadcount
 			}
 		});
 	}
@@ -56,6 +58,7 @@
 		var btitle = $("#btitle").val();
 	    var bname = $("#bname").val();
 	    var bcontent = $("#bcontent").val();
+	    var breadcount = $("#breadcount").val() - 1;
 	
 	    $.ajax({
 	        type: 'put',
@@ -69,7 +72,8 @@
 	        	bno: bno,
 	            bname: bname,
 	            btitle: btitle,
-	            bcontent: bcontent
+	            bcontent: bcontent,
+	            breadcount: breadcount
 	        }),
 	        success: function (result) {
 	            console.log(result);

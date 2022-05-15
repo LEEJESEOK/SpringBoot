@@ -43,7 +43,7 @@
 				function(index, item){
 					str += "<tr>"
 						+ "<td>" + item.bno + "</td>"
-						+ "<td style=\"cursor:pointer; text-decoration:underline\" onclick=\"location.href=get(" + item.bno + ");\">" + item.btitle + "</td>"
+						+ "<td style=\"cursor:pointer; text-decoration:underline\" onclick=\"location.href='/board/detail?bno=" + item.bno + "'\">" + item.btitle + "</td>"
 						+ "<td>" + item.bname + "</td>"
 						+ "<td>" + item.bregdate + "</td>"
 						+ "<td>" + item.breadcount + "</td>"
@@ -52,15 +52,5 @@
 			console.log(str);
 			$("#board").html(str);
 		});
-	}
-	
-	function get(bno){
-		$.ajax({
-			type:"get",
-			url:"/articles/" + bno,				
-			success:function(article){
-				location.href='/board/detail?bno='+bno;
-			}
-		});//ajax
 	}
 </script>

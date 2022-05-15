@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.entity.BoardDTO;
 import com.hyundai.repository.BoardDAO;
@@ -18,7 +19,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void insertArticle(BoardDTO boardDTO){
-		log.info("insert...");
 		boardDAO.insertArticle(boardDTO);
 	}
 
@@ -26,10 +26,12 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDTO> getArticleList(){
 		return boardDAO.getArticleList();
 	}
-
+	
+	@Transactional // 게시물 조회와 조회수 증가를 함께 처리
 	@Override
 	public BoardDTO getArticle(long bno) {
 		BoardDTO boardDTO = boardDAO.getArticle(bno);
+		boardDAO.updateReadCount(bno);
 		return boardDTO;
 	}
 
@@ -42,4 +44,5 @@ public class BoardServiceImpl implements BoardService {
 	public void updateArticle(BoardDTO boardDTO) {
 		boardDAO.updateArticle(boardDTO);
 	}
+
 }

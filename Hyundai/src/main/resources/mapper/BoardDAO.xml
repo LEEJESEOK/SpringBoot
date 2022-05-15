@@ -28,7 +28,14 @@
 		UPDATE tbl_board
 		SET bname = #{bname},
 			btitle = #{btitle},
-			bcontent = #{bcontent}
+			bcontent = #{bcontent},
+			breadcount = #{breadcount}
+		WHERE bno = #{bno}
+	</update>
+	
+	<update id="updateReadCount" parameterType="BoardDTO">
+		UPDATE tbl_board
+		SET breadcount = (breadcount + 1)
 		WHERE bno = #{bno}
 	</update>
 		

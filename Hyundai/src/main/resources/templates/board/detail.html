@@ -47,6 +47,7 @@
 			type:"get",
 			url:"/articles/" + bno,			
 			success:function(article){
+				article.breadcount += 1;
 				str += "<tr>"
 					+ "<td>" + article.bno + "</td>"
 					+ "<td>" + article.btitle + "</td>"

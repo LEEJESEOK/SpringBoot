@@ -17,4 +17,6 @@ public interface BoardDAO {
 	void deleteArticle(long bno);
 
 	void updateArticle(BoardDTO boardDTO);
+	
+	void updateReadCount(long bno);
 }
