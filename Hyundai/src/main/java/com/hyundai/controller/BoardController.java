@@ -1,6 +1,9 @@
 package com.hyundai.controller;
 
+import com.hyundai.security.dto.AuthUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +41,13 @@ public class BoardController {
 	 * 이지은 작성
 	 * 게시물 등록 페이지
 	 */
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/board/insert")
-	public String insert(Model model){
+	public String insert(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
 		
 		long bno = boardService.getSeqBoard();
 		model.addAttribute("bno", bno);  // 현재 등록할 게시물의 글 번호
-		
+		model.addAttribute("authUser", authUserDTO);
 		return "board/insert";
 	}
 	

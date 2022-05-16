@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 	<th:block th:fragment="content">
 		<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
 		</br></br>
-		<span style="display:none" id ="bno" th:utext="${bno}"></span>
+		<span style="display:none" id="bno" th:utext="${bno}"></span>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -15,22 +15,24 @@
 				<div class="col-md-12">
 					<div class="table-wrap">
 						<table class="table">
-						  <thead class="thead-dark">
-						    <tr>
-						      <th>글 번호</th>
-						      <th>글 제목</th>
-						      <th>작성자</th>
-						      <th>글 내용</th>
-						      <th>작성일</th>
-						      <th>조회수</th>
-						    </tr>
-						  </thead>
-						  <tbody id = "detail">
-						  </tbody>
+							<thead class="thead-dark">
+								<tr>
+									<th>글 번호</th>
+									<th>글 제목</th>
+									<th>작성자</th>
+									<th>글 내용</th>
+									<th>작성일</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody id="detail">
+							</tbody>
 						</table>
 						<div class="uploadResult"></div></br>
-						<input type="button" value="삭제" id="DeleteBtn">
-						<input type="button" value="수정" id="ModifyBtn">
+						<div sec:authorize="isAuthenticated()">
+							<input type="button" value="삭제" id="DeleteBtn">
+							<input type="button" value="수정" id="ModifyBtn">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -42,34 +44,34 @@
 	var str = "";
 	get(bno);
 	getFile(bno);
-	
-	function getFile(bno){
-		$.getJSON("/files/"+bno, function(data){
+
+	function getFile(bno) {
+		$.getJSON("/files/" + bno, function (data) {
 			console.log(data);
 			var divArea = $(".uploadResult");
-		    var str = "";
-			
+			var str = "";
+
 			$(data).each(
-				function(index, item){
-					var fileName = item.ffolder +"/"+ item.uuid + "_"+ item.fname
-						console.log("여기: "+ fileName);
-						str += "<div>";
-			        	str += "<img src='/display?fileName="+encodeURI(fileName)+"'>";
-			        	str += "</div>";
+				function (index, item) {
+					var fileName = item.ffolder + "/" + item.uuid + "_" + item.fname
+					console.log("여기: " + fileName);
+					str += "<div>";
+					str += "<img src='/display?fileName=" + encodeURI(fileName) + "'>";
+					str += "</div>";
 				});
 			divArea.append(str);//img 태그 추가  
 		});
 	}
-	
 
-    
+
+
 
 	// 게시물 조회
-	function get(bno){
+	function get(bno) {
 		$.ajax({
-			type:"get",
-			url:"/articles/" + bno,			
-			success:function(article){
+			type: "get",
+			url: "/articles/" + bno,
+			success: function (article) {
 				article.breadcount += 1;
 				str += "<tr>"
 					+ "<td>" + article.bno + "</td>"
@@ -83,21 +85,21 @@
 			}
 		});
 	}
-	
+
 	// 게시물 삭제
-	$("#DeleteBtn").click(function(){			
+	$("#DeleteBtn").click(function () {
 		$.ajax({
-			type:"delete",
-			url:"/articles/"+ bno,
-			success:function(){
+			type: "delete",
+			url: "/articles/" + bno,
+			success: function () {
 				alert("글 삭제 완료");
-				location.href='/board/list?pageNum=1';
+				location.href = '/board/list?pageNum=1';
 			}
 		});
 	});
-	
+
 	// 게시물 수정
-	$("#ModifyBtn").click(function(){			
-		location.href='/board/update?bno='+bno;
+	$("#ModifyBtn").click(function () {
+		location.href = '/board/update?bno=' + bno;
 	});
 </script>

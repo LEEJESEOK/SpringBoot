@@ -1,6 +1,8 @@
 package com.hyundai.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,11 +39,13 @@ public class BoardRestController {
 	 * @param pageNum: 게시판 페이지 번호
 	 */
 	@GetMapping("/board/{pageNum}")
-	public ResponseEntity<List<BoardDTO>> list(@PathVariable("pageNum") int pageNum){
+	public ResponseEntity<List<BoardDTO>> list(@PathVariable("pageNum" ) Optional<Integer> pageNum){
+
+		int pageNumber = pageNum.orElse(1);
 		
 		ResponseEntity<List<BoardDTO>> entry = null;
 		try {  // 해당 페이지의 게시물 목록 데이터 조회
-			entry = new ResponseEntity<List<BoardDTO>>(boardService.getArticleList(new Criteria(pageNum, 5)), HttpStatus.OK);
+			entry = new ResponseEntity<List<BoardDTO>>(boardService.getArticleList(new Criteria(pageNumber, 5)), HttpStatus.OK);
 			log.info(entry);
 			
 		} catch(Exception e) {
@@ -58,7 +62,7 @@ public class BoardRestController {
 	 */
 	@PostMapping("/articles")
 	public ResponseEntity<String> register(@RequestBody BoardDTO boardDTO){
-		
+		log.info("boardDTO : " + boardDTO);
 		ResponseEntity<String> entry = null;
 		try {  // 전달받은 게시물 데이터 등록
 			boardService.insertArticle(boardDTO);
