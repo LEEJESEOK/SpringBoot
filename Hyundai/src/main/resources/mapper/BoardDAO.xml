@@ -19,6 +19,25 @@
 		ORDER BY bno DESC	
 	</select>
 	
+	<select id="getArticleListWithPaging" resultType="BoardDTO">
+		<![CDATA[
+		SELECT bno, bname, btitle, bcontent, bregdate, breadcount
+		FROM (
+				SELECT /*+INDEX_DESC(tbl_board pk_board) */
+					ROWNUM rn, bno, bname, btitle, bcontent, bregdate, breadcount
+				FROM tbl_board
+				WHERE ROWNUM <= #{pageNum} * #{amount}
+		)
+		WHERE rn > (#{pageNum} - 1) * #{amount}
+	]]>
+	</select>
+	
+	<select id="countTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM tbl_board
+		WHERE bno > 0
+	</select> 
+	
 	<select id="getArticle" parameterType="long" resultType="BoardDTO">
 		SELECT bno, bname, btitle, bcontent, bregdate, breadcount
 		FROM tbl_board

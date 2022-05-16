@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hyundai.entity.Criteria;
+import com.hyundai.entity.PageDTO;
 import com.hyundai.service.BoardService;
 
 @Controller
@@ -15,7 +17,11 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board/list")
-	public String list(){
+	public String list(@RequestParam("pageNum") long pageNum, Criteria cri, Model model){
+		
+		int total = boardService.getTotal();
+		model.addAttribute("pageMaker", new PageDTO(cri, total));  // 페이징 처리를 위한 데이터 추가
+		
 		return "board/list";
 	}
 	

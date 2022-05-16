@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.Criteria;
 import com.hyundai.entity.UploadResultDTO;
 
 @SpringBootTest
@@ -15,7 +16,7 @@ public class BoardServiceTests {
 	
 	//@Test
 	public void testGetArticleList() {
-		boardService.getArticleList().forEach(i->System.out.println(i));
+		boardService.getArticleList(new Criteria(3, 3)).forEach(i->System.out.println(i));
 	}
 	
 	//@Test

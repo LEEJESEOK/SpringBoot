@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.Criteria;
 import com.hyundai.service.BoardService;
 
 import lombok.extern.log4j.Log4j2;
@@ -31,12 +32,12 @@ public class BoardRestController {
 	private BoardService boardService;
 	
 	// 게시물 목록 조회
-	@GetMapping("/articles")
-	public ResponseEntity<List<BoardDTO>> list(){
+	@GetMapping("/board/{pageNum}")
+	public ResponseEntity<List<BoardDTO>> list(@PathVariable("pageNum") int pageNum){
 		ResponseEntity<List<BoardDTO>> entry = null;
 		log.info("BoardRestController: /list.....");
 		try {
-			entry = new ResponseEntity<List<BoardDTO>>(boardService.getArticleList(), HttpStatus.OK);
+			entry = new ResponseEntity<List<BoardDTO>>(boardService.getArticleList(new Criteria(pageNum, 5)), HttpStatus.OK);
 			log.info(entry);
 		} catch(Exception e) {
 			e.printStackTrace();

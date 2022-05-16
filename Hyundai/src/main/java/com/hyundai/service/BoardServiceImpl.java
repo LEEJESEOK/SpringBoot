@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.Criteria;
 import com.hyundai.entity.UploadResultDTO;
 import com.hyundai.repository.BoardDAO;
 
@@ -24,8 +25,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDTO> getArticleList(){
-		return boardDAO.getArticleList();
+	public List<BoardDTO> getArticleList(Criteria cri){
+		return boardDAO.getArticleListWithPaging(cri);
 	}
 	
 	@Transactional // 게시물 조회와 조회수 증가를 함께 처리
@@ -65,6 +66,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<UploadResultDTO> getFileList(long bno) {
 		return boardDAO.getFileList(bno);
+	}
+	
+	@Override
+	public int getTotal() {
+		int count = boardDAO.countTotal();
+		return count;
 	}
 
 }

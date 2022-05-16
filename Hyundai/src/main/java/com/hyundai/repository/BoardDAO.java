@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.Criteria;
 import com.hyundai.entity.UploadResultDTO;
 
 @Mapper
@@ -14,6 +15,10 @@ public interface BoardDAO {
 	void insertFile(UploadResultDTO uploadResultDTO);
 
 	List<BoardDTO> getArticleList();
+	
+	List<BoardDTO> getArticleListWithPaging(Criteria cri);
+	
+	int countTotal();
 	
 	BoardDTO getArticle(long bno);
 

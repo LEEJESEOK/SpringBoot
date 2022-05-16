@@ -3,6 +3,7 @@ package com.hyundai.service;
 import java.util.List;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.Criteria;
 import com.hyundai.entity.UploadResultDTO;
 
 public interface BoardService {
@@ -10,7 +11,7 @@ public interface BoardService {
 	
 	void insertFile(UploadResultDTO uploadResultDTO);
 
-	List<BoardDTO> getArticleList();
+	List<BoardDTO> getArticleList(Criteria cri);
 	
 	BoardDTO getArticle(long bno);
 
@@ -23,4 +24,6 @@ public interface BoardService {
 	long getSeqBoard();
 	
 	List<UploadResultDTO> getFileList(long bno);
+	
+	int getTotal();
 }

@@ -28,6 +28,7 @@
 								<td><textarea id="bcontent" cols="40" style="width:700px;height:200px" placeholder="내용 입력"></textarea></td>
 							</tr>
 						</table>
+						<div class="uploadResult"></div></br>
 						<input type="hidden" id ="breadcount"/>
 						<button id="ModifyBtn">Modify Article</button>
 					</div>
@@ -39,6 +40,46 @@
 <script>
 	var bno = $('#bno').text();
 	get(bno);
+	getFile(bno);
+	
+	//삭제 버튼 클릭 delegate 방식 처리--> 동적 생성
+    $(".uploadResult").on("click", ".removeBtn", function(e){
+        var target = $(this);
+        var fileName = target.data("name");
+        //이미지 div선택
+        var targetDiv = $(this).closest("div");
+        console.log(fileName);
+        //파일 삭제 호출
+        $.post('/removeFile', {fileName: fileName}, function(result){
+            console.log(result);
+            //파일 삭제 성공시 div제거
+            if(result === true){
+                targetDiv.remove();
+            }//end if
+        });//end post
+    });//end remove click
+    
+	
+	// 파일 가져옴
+	function getFile(bno){
+		$.getJSON("/files/"+bno, function(data){
+			console.log(data);
+			var divArea = $(".uploadResult");
+		    var str = "";
+			
+			$(data).each(
+				function(index, item){
+					var fileName = item.ffolder +"/"+ item.uuid + "_"+ item.fname
+						console.log("여기: "+ fileName);
+						str += "<div>";
+			        	str += "<img src='/display?fileName="+encodeURI(fileName)+"'>";
+			        	str += "<button class='removeBtn' data-name='";
+			            str +=  encodeURI(fileName) + "'>REMOVE</button>"
+			        	str += "</div>";
+				});
+			divArea.append(str);//img 태그 추가  
+		});
+	}
 	
 	// 게시물 조회
 	function get(bno){
@@ -79,7 +120,7 @@
 	            console.log(result);
 	            if (result == 'SUCCESS') {
 	                alert("글 수정 완료");
-	                location.href='/board/list';
+	                location.href='/board/list?pageNum=1';
 	            }
 	            else{
 	            	alert("글 수정 실패");

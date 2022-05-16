@@ -60,6 +60,9 @@
 			divArea.append(str);//img 태그 추가  
 		});
 	}
+	
+
+    
 
 	// 게시물 조회
 	function get(bno){
@@ -88,7 +91,7 @@
 			url:"/articles/"+ bno,
 			success:function(){
 				alert("글 삭제 완료");
-				location.href='/board/list';
+				location.href='/board/list?pageNum=1';
 			}
 		});
 	});
