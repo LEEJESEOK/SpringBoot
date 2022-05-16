@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.repository.BoardDAO">
-
+	
+	<!--  -->
 	<insert id="insertArticle" parameterType="BoardDTO">
 		INSERT INTO tbl_board(bno, bname, btitle, bcontent)
 		VALUES (seq_board.nextval, #{bname}, #{btitle}, #{bcontent})
 	</insert>
 	
+	<!--  -->
 	<insert id="insertFile" parameterType="UploadResultDTO">
 		INSERT INTO tbl_file(fno, bno, fname, ffolder, uuid)
 		VALUES (seq_file.nextval, #{bno}, #{fname}, #{ffolder}, #{uuid})
-	
 	</insert>
 	
 	<select id="getArticleList" resultType="BoardDTO">

@@ -1,12 +1,8 @@
 package com.hyundai.controller;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.entity.BoardDTO;
 import com.hyundai.entity.Criteria;
@@ -24,6 +19,11 @@ import com.hyundai.service.BoardService;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * 게시판 페이지 REST 컨트롤러
+ * @author 이지은
+ *
+ */
 @Log4j2
 @RestController
 public class BoardRestController {
@@ -31,14 +31,19 @@ public class BoardRestController {
 	@Autowired
 	private BoardService boardService;
 	
-	// 게시물 목록 조회
+	/**
+	 * 이지은 작성
+	 * 게시판 조회
+	 * @param pageNum: 게시판 페이지 번호
+	 */
 	@GetMapping("/board/{pageNum}")
 	public ResponseEntity<List<BoardDTO>> list(@PathVariable("pageNum") int pageNum){
+		
 		ResponseEntity<List<BoardDTO>> entry = null;
-		log.info("BoardRestController: /list.....");
-		try {
+		try {  // 해당 페이지의 게시물 목록 데이터 조회
 			entry = new ResponseEntity<List<BoardDTO>>(boardService.getArticleList(new Criteria(pageNum, 5)), HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<List<BoardDTO>>(HttpStatus.BAD_REQUEST);
@@ -46,15 +51,20 @@ public class BoardRestController {
 		return entry;
 	}
 	
-	// 게시물 등록
+	/**
+	 * 이지은 작성
+	 * 게시물 등록
+	 * @param boardDTO: 등록할 게시물 내용
+	 */
 	@PostMapping("/articles")
 	public ResponseEntity<String> register(@RequestBody BoardDTO boardDTO){
+		
 		ResponseEntity<String> entry = null;
-		log.info("BoardRestController: /insert.....");
-		try {
+		try {  // 전달받은 게시물 데이터 등록
 			boardService.insertArticle(boardDTO);
 			entry = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -63,14 +73,19 @@ public class BoardRestController {
 		return entry;
 	}
 	
-	// 게시물 상세 조회
+	/**
+	 * 이지은 작성
+	 * 게시물 조회
+	 * @param bno: 조회할 게시물 번호
+	 */
 	@GetMapping("/articles/{bno}")
 	public ResponseEntity<BoardDTO> detail(@PathVariable("bno") int bno){
+		
 		ResponseEntity<BoardDTO> entry = null;
-		log.info("BoardRestController: /detail.....");
-		try {
+		try {  // 해당 번호의 게시물 조회
 			entry = new ResponseEntity<BoardDTO>(boardService.getArticle(bno), HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<BoardDTO>(HttpStatus.BAD_REQUEST);
@@ -78,16 +93,22 @@ public class BoardRestController {
 		return entry;
 	}
 	
-	// 게시물 수정
+	/**
+	 * 이지은 작성
+	 * 게시물 수정
+	 * @param bno: 수정할 게시물 번호
+	 * @param boardDTO: 수정할 게시물 내용
+	 */
 	@PutMapping("/articles/{bno}")
 	public ResponseEntity<String> update(@PathVariable("bno") int bno, @RequestBody BoardDTO boardDTO){
+		
 		ResponseEntity<String> entry = null;
-		log.info("BoardRestController: /update.....");
-		try {
+		try {  // 해당 번호의 게시물 수정
 			boardDTO.setBno(bno);
 			boardService.updateArticle(boardDTO);
 			entry = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -95,15 +116,20 @@ public class BoardRestController {
 		return entry;
 	}
 	
-	// 게시물 삭제
+	/**
+	 * 이지은 작성
+	 * 게시물 삭제
+	 * @param bno: 삭제할 게시물 번호
+	 */
 	@DeleteMapping("/articles/{bno}")
 	public ResponseEntity<String> delete(@PathVariable("bno") int bno){
+		
 		ResponseEntity<String> entry = null;
-		log.info("BoardRestController: /delete.....");
-		try {
+		try {  // 해당 번호의 게시물 삭제
 			boardService.deleteArticle(bno);
 			entry = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -111,19 +137,24 @@ public class BoardRestController {
 		return entry;
 	}
 	
-	// 게시물 다시 불러오기: 수정용
+	/**
+	 * 이지은 작성
+	 * 게시물 내용 조회
+	 * 수정 시 조회수 증가 방지
+	 * @param bno: 수정할 게시물 기존 내용
+	 */
 	@GetMapping("/details/{bno}")
 	public ResponseEntity<BoardDTO> reload(@PathVariable("bno") int bno){
+		
 		ResponseEntity<BoardDTO> entry = null;
-		log.info("BoardRestController: /reload.....");
-		try {
+		try {  // 수정할 게시물 기존 내용 조회
 			entry = new ResponseEntity<BoardDTO>(boardService.getDetail(bno), HttpStatus.OK);
 			log.info(entry);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			entry = new ResponseEntity<BoardDTO>(HttpStatus.BAD_REQUEST);
 		}
 		return entry;
 	}
-	
 }
