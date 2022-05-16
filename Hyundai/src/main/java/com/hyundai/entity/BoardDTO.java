@@ -17,6 +17,7 @@ import lombok.ToString;
 public class BoardDTO {
 	private long bno;  			// 글 번호
 	private String bname;  		// 글 작성자
+	private String uemail;		// 작성자 이메일(id)
 	private String btitle;  	// 글 제목
 	private String bcontent;	// 글 내용
 	private Date bregdate;  	// 글 작성일

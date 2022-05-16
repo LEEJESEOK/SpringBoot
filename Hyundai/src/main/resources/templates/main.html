@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>[ 이제석 | 이지은 ] Spring Boot Board</title>
+    <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+<h1>메인 페이지</h1>
+<script>
+    const waitTime = 3;
+    let remainTime = waitTime;
+
+    $().ready(function () {
+
+        setSessionTimer(remainTime);
+
+        setInterval(function () {
+            --remainTime;
+            if (remainTime <= 0) {
+                window.location.href = "/board/list";
+            }
+            setSessionTimer(remainTime);
+
+        }, 1000)
+    });
+
+    function timerText(time) {
+        return time + "초 후 목록으로 이동합니다."
+    }
+
+    function setSessionTimer(time) {
+        $("#sessionTimer").text(timerText(time));
+    }
+
+</script>
+<zh2 id="sessionTimer">초 후 리스트로 이동합니다</zh2>
+</body>
+</html>

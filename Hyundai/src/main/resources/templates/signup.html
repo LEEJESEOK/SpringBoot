@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+        <script>
+            $().ready(function () {
+
+                $("#signupBtn").click(function () {
+                    console.log(JSON.stringify({
+                        email: $("#id").val(),
+                        password: $("#password").val(),
+                        name: $("#name").val()
+                    }));
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/signup",
+                        data: JSON.stringify({
+                            email: $("#id").val(),
+                            password: $("#password").val(),
+                            name: $("#name").val()
+                        }),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.result == "success") {
+                                location.href = "signupComplete";
+                            }
+                        },
+                        error: function (request, status, error) {
+                            let message = "code : " + request + "\n";
+                            message += "message : " + request.responseText + "\n";
+                            message += "error : " + error;
+
+                            alert(message);
+                        }
+                    });
+                });
+            });
+        </script>
+        <div class="container container-sm" style="width: 40%;">
+            <h1 class="mb-1 text-center">Sign up</h1>
+            <div id="signinForm">
+                <p class="form-row">
+                    <label for="id">id</label>
+                    <input autofocus class="form-control" id="id" name="id">
+                </p>
+                <p class="form-row">
+                    <label for="password">password</label>
+                    <input class="form-control" id="password" name="password" type="password">
+                </p>
+                <p class="form-row">
+                    <label for="name">name</label>
+                    <input class="form-control" id="name" name="name">
+                </p>
+                <button class="btn btn-lg btn-primary btn-block" id="signupBtn">Sign up</button>
+            </div>
+        </div>
+    </th:block>
+</th:block>
