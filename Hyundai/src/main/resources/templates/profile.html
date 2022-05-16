@@ -1,38 +1,63 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko">
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
         <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
-
         <script>
-            console.log("${authUser}");
-        </script>
+            $().ready(function () {
 
+
+
+                $("#updateProfileBtn").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/userInfo",
+                        data: JSON.stringify({
+                            email: $("#user_profile_email").val(),
+                            password: $("#user_profile_password").val(),
+                            name: $("#user_profile_name").val()
+                        }),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.result == "success") {
+                                alert("수정되었습니다.");
+                                location.href = "profile";
+                            }
+                        },
+                        error: function (request, status, error) {
+                            let message = "code : " + request + "\n";
+                            message += "message : " + request.responseText + "\n";
+                            message += "error : " + error;
+
+                            alert(message);
+                        }
+                    });
+                });
+            });
+        </script>
         <div class="container-sm" style="width: 40%;">
-            <h1>마이 페이지</h1>
-            <h2 sec:authorize="hasRole('ADMIN')">Admin User</h2>
-            <h2 sec:authorize="hasRole('USER')">User</h2>
-            <div>
-                <dl class="form-group">
-                    <dt>
-                        <label for="user_profile_email">Email</label>
-                    </dt>
-                    <dd>
-                        <input class="form-control" disabled id="user_profile_email" name="email"
-                               th:attr="placeholder=${authUser.email}"
-                               type="text">
-                    </dd>
-                </dl>
-                <dl class="form-group">
-                    <dt>
-                        <label for="user_profile_name">Name</label>
-                    </dt>
-                    <dd>
-                        <input class="form-control" disabled id="user_profile_name" name="name"
-                               th:attr="placeholder=${authUser.name}"
-                               type="text">
-                    </dd>
-                </dl>
+            <h1 class="m-lg-5 text-center">마이 페이지</h1>
+
+            <div class="form-group">
+                <p class="form-row">
+                    <label for="user_profile_email">Email</label>
+                    <input class="form-control" disabled id="user_profile_email" name="email"
+                           th:attr="value=${user.email}"
+                           type="text">
+                </p>
+                <p class="form-row">
+                    <label for="user_profile_password">Password</label></th>
+                    <input class="form-control" id="user_profile_password" name="password"
+                           type="password">
+                </p>
+                <p class="form-row">
+                    <label for="user_profile_name">Name</label></th>
+                    <input class="form-control" id="user_profile_name" name="name"
+                           th:attr="value=${user.name}"
+                           type="text">
+                </p>
+                <button class="btn btn-outline-primary" id="updateProfileBtn"> 수정</button>
             </div>
         </div>
     </th:block>
