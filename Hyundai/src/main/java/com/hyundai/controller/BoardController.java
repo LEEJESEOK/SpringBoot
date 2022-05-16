@@ -1,12 +1,18 @@
 package com.hyundai.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hyundai.service.BoardService;
+
 @Controller
 public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/board/list")
 	public String list(){
@@ -14,7 +20,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/insert")
-	public String insert(){
+	public String insert(Model model){
+		long bno = boardService.getSeqBoard();
+		model.addAttribute("bno", bno); // 현재 등록할 게시물의 글 번호
 		return "board/insert";
 	}
 	
@@ -28,5 +36,10 @@ public class BoardController {
 	public String update(@RequestParam("bno") long bno, Model model) {
 		model.addAttribute("bno", bno);
 		return "board/update";
+	}
+	
+	@GetMapping("/board/uploadEx")
+	public void uploadEx() {
+		
 	}
 }

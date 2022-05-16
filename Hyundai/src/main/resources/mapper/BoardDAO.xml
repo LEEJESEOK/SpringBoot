@@ -7,6 +7,12 @@
 		VALUES (seq_board.nextval, #{bname}, #{btitle}, #{bcontent})
 	</insert>
 	
+	<insert id="insertFile" parameterType="UploadResultDTO">
+		INSERT INTO tbl_file(fno, bno, fname, ffolder, uuid)
+		VALUES (seq_file.nextval, #{bno}, #{fname}, #{ffolder}, #{uuid})
+	
+	</insert>
+	
 	<select id="getArticleList" resultType="BoardDTO">
 		SELECT bno, bname, btitle, bcontent, bregdate, breadcount
 		FROM tbl_board
@@ -38,5 +44,17 @@
 		SET breadcount = (breadcount + 1)
 		WHERE bno = #{bno}
 	</update>
-		
+	
+	<select id="getSeqBoard" resultType="long">
+		select last_number
+		from user_sequences
+		where lower(sequence_name) = 'seq_board'
+	</select>
+	
+	<select id="getFileList" parameterType="long" resultType="UploadResultDTO">
+		SELECT fno, bno, fname, ffolder, uuid
+		FROM tbl_file
+		WHERE bno = #{bno}
+	</select>
+	
 </mapper>

@@ -28,6 +28,7 @@
 						  <tbody id = "detail">
 						  </tbody>
 						</table>
+						<div class="uploadResult"></div></br>
 						<input type="button" value="삭제" id="DeleteBtn">
 						<input type="button" value="수정" id="ModifyBtn">
 					</div>
@@ -40,7 +41,26 @@
 	var bno = $('#bno').text();
 	var str = "";
 	get(bno);
+	getFile(bno);
 	
+	function getFile(bno){
+		$.getJSON("/files/"+bno, function(data){
+			console.log(data);
+			var divArea = $(".uploadResult");
+		    var str = "";
+			
+			$(data).each(
+				function(index, item){
+					var fileName = item.ffolder +"/"+ item.uuid + "_"+ item.fname
+						console.log("여기: "+ fileName);
+						str += "<div>";
+			        	str += "<img src='/display?fileName="+encodeURI(fileName)+"'>";
+			        	str += "</div>";
+				});
+			divArea.append(str);//img 태그 추가  
+		});
+	}
+
 	// 게시물 조회
 	function get(bno){
 		$.ajax({

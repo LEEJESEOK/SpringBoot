@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.UploadResultDTO;
 import com.hyundai.repository.BoardDAO;
 
 import lombok.extern.log4j.Log4j2;
@@ -49,6 +50,21 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO getDetail(long bno) {
 		BoardDTO boardDTO = boardDAO.getArticle(bno);
 		return boardDTO;
+	}
+
+	@Override
+	public void insertFile(UploadResultDTO uploadResultDTO) {
+		boardDAO.insertFile(uploadResultDTO);
+	}
+	
+	@Override
+	public long getSeqBoard() {
+		return boardDAO.getSeqBoard();
+	}
+
+	@Override
+	public List<UploadResultDTO> getFileList(long bno) {
+		return boardDAO.getFileList(bno);
 	}
 
 }

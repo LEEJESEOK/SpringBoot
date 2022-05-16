@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.UploadResultDTO;
 import com.hyundai.repository.BoardDAO;
 
 @SpringBootTest
@@ -13,12 +14,12 @@ public class BoardDAOTests {
 	@Autowired
 	private BoardDAO boardDAO;
 	
-	@Test
+	//@Test
 	public void testGetArticleList() {
 		boardDAO.getArticleList().forEach(i->System.out.println(i));
 	}
 	
-	@Test
+	//@Test
 	public void testInsertArticle() {
 		BoardDTO boardDTO = new BoardDTO();	
 		boardDTO.setBname("DAO insert test");
@@ -28,13 +29,24 @@ public class BoardDAOTests {
 		System.out.println(boardDTO);
 	}
 	
-	@Test
+	//@Test
+	public void testInsertFile() {
+		UploadResultDTO file = new UploadResultDTO();
+		file.setBno(2);
+		file.setFname("fname2");
+		file.setUuid("uuid2");
+		file.setFfolder("ffolder");
+		
+		boardDAO.insertFile(file);
+	}
+	
+	//@Test
 	public void testGetArticle() {
 		BoardDTO boardDTO = boardDAO.getArticle(1);
 		System.out.println(boardDTO);
 	}
 	
-	@Test
+	//@Test
 	public void testUpdateArticle() {
 		BoardDTO boardDTO = new BoardDTO();	
 		boardDTO.setBname("DAO update test");
@@ -45,16 +57,28 @@ public class BoardDAOTests {
 		System.out.println(boardDTO);
 	}
 	
-	@Test
+	//@Test
 	public void testDeleteArticle() {
 		boardDAO.deleteArticle(3);
 	}
 	
-	@Test
+	//@Test
 	public void testUpdateReadCount() {
 		boardDAO.updateReadCount(1);
 		boardDAO.updateReadCount(1);
 		boardDAO.updateReadCount(1);
+	}
+	
+	//@Test
+	public void testSeqBoard() {
+		long seq = boardDAO.getSeqBoard();
+		System.out.println(seq);
+	}
+	
+	@Test
+	public void testGetFileList() {
+		long bno = 7;
+		boardDAO.getFileList(bno).forEach(i->System.out.println(i));
 	}
 		
 }

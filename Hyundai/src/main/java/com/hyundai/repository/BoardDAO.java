@@ -5,10 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.entity.BoardDTO;
+import com.hyundai.entity.UploadResultDTO;
 
 @Mapper
 public interface BoardDAO {
 	void insertArticle(BoardDTO boardDTO);
+	
+	void insertFile(UploadResultDTO uploadResultDTO);
 
 	List<BoardDTO> getArticleList();
 	
@@ -19,4 +22,8 @@ public interface BoardDAO {
 	void updateArticle(BoardDTO boardDTO);
 	
 	void updateReadCount(long bno);
+	
+	long getSeqBoard();
+	
+	List<UploadResultDTO> getFileList(long bno);
 }
