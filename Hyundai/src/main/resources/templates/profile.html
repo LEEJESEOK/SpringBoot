@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+        <script>
+            console.log("${authUser}");
+        </script>
+
+        <div class="container-sm" style="width: 40%;">
+            <h1>마이 페이지</h1>
+            <h2 sec:authorize="hasRole('ADMIN')">Admin User</h2>
+            <h2 sec:authorize="hasRole('USER')">User</h2>
+            <div>
+                <dl class="form-group">
+                    <dt>
+                        <label for="user_profile_email">Email</label>
+                    </dt>
+                    <dd>
+                        <input class="form-control" disabled id="user_profile_email" name="email"
+                               th:attr="placeholder=${authUser.email}"
+                               type="text">
+                    </dd>
+                </dl>
+                <dl class="form-group">
+                    <dt>
+                        <label for="user_profile_name">Name</label>
+                    </dt>
+                    <dd>
+                        <input class="form-control" disabled id="user_profile_name" name="name"
+                               th:attr="placeholder=${authUser.name}"
+                               type="text">
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </th:block>
+</th:block>

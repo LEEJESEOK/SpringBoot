@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // page role 지정
 //        http.authorizeRequests()
 //                .antMatchers("/").permitAll()
-//                .antMatchers("/mypage").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
+//                .antMatchers("/profile").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
 //                .antMatchers("/admin").hasRole(UserRole.ADMIN.name());
 
         // 로그인 성공시 루트로 이동
@@ -70,9 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
-                .successHandler(successHandler())
+                .defaultSuccessUrl("/board/list")
+//                .successHandler(successHandler())
                 .and()
                 .logout()
+                .logoutSuccessUrl("/board/list")
                 .and()
                 .rememberMe()
                 .tokenValiditySeconds(60 * 60 * 24 * 7)
