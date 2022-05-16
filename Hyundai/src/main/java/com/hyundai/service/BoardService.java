@@ -27,4 +27,6 @@ public interface BoardService {
 	void updateArticle(BoardDTO boardDTO);  // 게시물 수정
 	BoardDTO getDetail(long bno);  // 게시물 조회 (수정용)
 	long getSeqBoard();  // 현재 글 번호 조회
+	void deleteFile(long fno);  // 첨부 파일 삭제
+	
 }

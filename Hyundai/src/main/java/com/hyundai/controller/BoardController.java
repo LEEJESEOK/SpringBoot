@@ -15,7 +15,7 @@ import com.hyundai.service.BoardService;
 
 /**
  * 게시판 페이지 매핑 컨트롤러
- * @author 이지은
+ * @author 이지은, 이제석
  *
  */
 @Controller
@@ -38,16 +38,16 @@ public class BoardController {
 	}
 
 	/**
-	 * 이지은 작성
+	 * 이지은, 이제석 작성
 	 * 게시물 등록 페이지
 	 */
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_USER')")  // 권한 확인
 	@GetMapping("/board/insert")
 	public String insert(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
 		
 		long bno = boardService.getSeqBoard();
-		model.addAttribute("bno", bno);  // 현재 등록할 게시물의 글 번호
-		model.addAttribute("authUser", authUserDTO);
+		model.addAttribute("bno", bno);  // 등록할 게시물의 글 번호
+		model.addAttribute("authUser", authUserDTO);  // 현재 로그인한 유저
 		return "board/insert";
 	}
 	
@@ -56,9 +56,10 @@ public class BoardController {
 	 * 게시물 조회 페이지
 	 */
 	@GetMapping("/board/detail")
-	public String detail(@RequestParam("bno") long bno, Model model) {
+	public String detail(@RequestParam("bno") long bno, @AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
 		
-		model.addAttribute("bno", bno);
+		model.addAttribute("bno", bno);  // 조회할 게시물의 글 번호
+		model.addAttribute("authUser", authUserDTO);  // 현재 로그인한 유저
 		return "board/detail";
 	}
 	
@@ -69,7 +70,7 @@ public class BoardController {
 	@GetMapping("/board/update")
 	public String update(@RequestParam("bno") long bno, Model model) {
 		
-		model.addAttribute("bno", bno);
+		model.addAttribute("bno", bno);  // 수정할 게시물의 글 번호
 		return "board/update";
 	}
 }

@@ -53,8 +53,7 @@
     <delete id="deleteArticle" parameterType="long">
         DELETE
         tbl_board
-		WHERE bno =
-        #{bno}
+		WHERE bno = #{bno}
     </delete>
 
     <update id="updateArticle" parameterType="BoardDTO">
@@ -83,5 +82,11 @@
         FROM tbl_file
         WHERE bno = #{bno}
     </select>
+    
+    <delete id="deleteFile" parameterType="long">
+    	DELETE
+        tbl_file
+		WHERE fno = #{fno}
+    </delete>
 
 </mapper>

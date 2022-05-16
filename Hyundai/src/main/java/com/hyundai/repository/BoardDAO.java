@@ -31,4 +31,5 @@ public interface BoardDAO {
 
 	void updateArticle(BoardDTO boardDTO);  // 게시물 수정
 	long getSeqBoard();  // 현재 글 번호 조회
+	void deleteFile(long fno);  // 첨부 파일 삭제
 }

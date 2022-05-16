@@ -5,6 +5,7 @@
 		<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
 		</br></br>
 		<span style="display:none" id="bno" th:utext="${bno}"></span>
+		<span style="display:none" id ="uemail" th:utext="${authUser.email}"></span>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -14,6 +15,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-wrap">
+						<input type="hidden" id="uemail">
 						<table class="table">
 							<thead class="thead-dark">
 								<tr>
@@ -30,8 +32,10 @@
 						</table>
 						<div class="uploadResult"></div></br>
 						<div sec:authorize="isAuthenticated()">
-							<input type="button" value="삭제" id="DeleteBtn">
-							<input type="button" value="수정" id="ModifyBtn">
+							<div id="btnGroup" style="display:none">
+								<input type="button" value="삭제" id="DeleteBtn">
+								<input type="button" value="수정" id="ModifyBtn">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -41,20 +45,19 @@
 </th:block>
 <script>
 	var bno = $('#bno').text();
+	var uemail = $("#uemail").text();
 	var str = "";
 	get(bno);
 	getFile(bno);
 
 	function getFile(bno) {
 		$.getJSON("/files/" + bno, function (data) {
-			console.log(data);
 			var divArea = $(".uploadResult");
 			var str = "";
 
 			$(data).each(
 				function (index, item) {
 					var fileName = item.ffolder + "/" + item.uuid + "_" + item.fname
-					console.log("여기: " + fileName);
 					str += "<div>";
 					str += "<img src='/display?fileName=" + encodeURI(fileName) + "'>";
 					str += "</div>";
@@ -62,9 +65,6 @@
 			divArea.append(str);//img 태그 추가  
 		});
 	}
-
-
-
 
 	// 게시물 조회
 	function get(bno) {
@@ -80,8 +80,17 @@
 					+ "<td>" + article.bcontent + "</td>"
 					+ "<td>" + article.bregdate + "</td>"
 					+ "<td>" + article.breadcount + "</td>"
-					+ "</tr>"
+					+ "</tr>";
 				$("#detail").html(str);
+				
+				console.log(uemail);
+				console.log(article.uemail);
+				if(article.uemail == uemail){
+					$("#btnGroup").show();
+				}
+				else{
+					$("#btnGroup").hide();
+				}
 			}
 		});
 	}

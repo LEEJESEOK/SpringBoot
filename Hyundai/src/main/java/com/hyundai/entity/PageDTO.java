@@ -3,7 +3,6 @@ package com.hyundai.entity;
 import lombok.Getter;
 import lombok.ToString;
 
-
 /**
  * 페이징 처리를 위한 데이터
  * @author 이지은

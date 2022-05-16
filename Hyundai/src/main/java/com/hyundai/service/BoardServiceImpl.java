@@ -86,4 +86,10 @@ public class BoardServiceImpl implements BoardService {
 	public long getSeqBoard() {
 		return boardDAO.getSeqBoard();
 	}
+	
+	// 첨부 파일 삭제
+	@Override
+	public void deleteFile(long fno) {
+		boardDAO.deleteFile(fno);
+	}
 }
