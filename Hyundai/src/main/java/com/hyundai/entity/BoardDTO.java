@@ -6,14 +6,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 게시판 관련 데이터
+ * @author 이지은
+ *
+ */
 @Getter
 @Setter
 @ToString
 public class BoardDTO {
-	private long bno;
-	private String bname;
-	private String btitle;
-	private String bcontent;
-	private Date bregdate;
-	private int breadcount;
+	private long bno;  			// 글 번호
+	private String bname;  		// 글 작성자
+	private String btitle;  	// 글 제목
+	private String bcontent;	// 글 내용
+	private Date bregdate;  	// 글 작성일
+	private int breadcount;  	// 글 조회수
 }

@@ -4,6 +4,7 @@
 		<th:block th:fragment="content">
 			<script src="http://code.jquery.com/jquery-2.2.3.min.js"> </script>
 				</br></br>
+				<span style="display:none" id ="pageNum" th:utext="${pageMaker.cri.pageNum}"></span>
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-6 text-center mb-5">
@@ -29,14 +30,40 @@
 							</div>
 						</div>
 					</div>
+						
+						
+<nav aria-label="Page navigation example ">
+  <ul class="pagination">
+  <li class="page-item">
+      <a class="page-link" th:href="@{?pageNum=1}" aria-label="Previous">
+        <span aria-hidden="true">처음</span>
+      </a>
+    </li>
+    <th:block  th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}">
+	    <li class="page-item" 
+	    		 th:with="start = ${pageMaker.startPage}, end = ${pageMaker.endPage}"
+	    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+	    		<a class="page-link" th:href="@{/board/list?pageNum={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+	    </li>
+    </th:block>
+    <li class="page-item">
+      <a class="page-link" th:href="@{?pageNum={page} (page = ${pageMaker.realEnd})}" aria-label="Previous">
+        <span aria-hidden="true">끝</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
 				</div>
 		</th:block>
 </th:block>
 <script>
+	var pageNum = $('#pageNum').text();
 	getList();
 	
 	function getList(){
-		$.getJSON("/articles", function(data){
+		$.getJSON("/board/"+pageNum, function(data){
 			console.log(data);
 			var str = "";
 			$(data).each(
