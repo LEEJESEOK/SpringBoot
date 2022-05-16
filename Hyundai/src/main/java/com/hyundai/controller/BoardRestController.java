@@ -104,4 +104,19 @@ public class BoardRestController {
 		}
 		return entry;
 	}
+	
+	// 게시물 다시 불러오기: 수정용
+	@GetMapping("/details/{bno}")
+	public ResponseEntity<BoardDTO> reload(@PathVariable("bno") int bno){
+		ResponseEntity<BoardDTO> entry = null;
+		log.info("BoardRestController: /reload.....");
+		try {
+			entry = new ResponseEntity<BoardDTO>(boardService.getDetail(bno), HttpStatus.OK);
+			log.info(entry);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entry = new ResponseEntity<BoardDTO>(HttpStatus.BAD_REQUEST);
+		}
+		return entry;
+	}
 }

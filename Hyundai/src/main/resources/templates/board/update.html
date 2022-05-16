@@ -44,7 +44,7 @@
 	function get(bno){
 		$.ajax({
 			type:"get",
-			url:"/articles/" + bno,			
+			url:"/details/" + bno,			
 			success:function(article){
 				document.getElementById("btitle").value = article.btitle
 				document.getElementById("bname").value = article.bname
@@ -58,7 +58,7 @@
 		var btitle = $("#btitle").val();
 	    var bname = $("#bname").val();
 	    var bcontent = $("#bcontent").val();
-	    var breadcount = $("#breadcount").val() - 1;
+	    var breadcount = $("#breadcount").val();
 	
 	    $.ajax({
 	        type: 'put',

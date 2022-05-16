@@ -45,4 +45,10 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateArticle(boardDTO);
 	}
 
+	@Override
+	public BoardDTO getDetail(long bno) {
+		BoardDTO boardDTO = boardDAO.getArticle(bno);
+		return boardDTO;
+	}
+
 }

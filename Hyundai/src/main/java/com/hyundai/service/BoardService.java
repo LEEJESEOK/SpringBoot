@@ -14,4 +14,6 @@ public interface BoardService {
 	void deleteArticle(long bno);
 	
 	void updateArticle(BoardDTO boardDTO);
+	
+	BoardDTO getDetail(long bno);
 }
