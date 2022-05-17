@@ -18,14 +18,11 @@ import com.hyundai.entity.BoardDTO;
 import com.hyundai.entity.Criteria;
 import com.hyundai.service.BoardService;
 
-import lombok.extern.log4j.Log4j2;
-
 /**
  * 게시판 페이지 REST 컨트롤러
  * @author 이지은
  *
  */
-@Log4j2
 @RestController
 public class BoardRestController {
 	
@@ -84,7 +81,6 @@ public class BoardRestController {
 		ResponseEntity<BoardDTO> entry = null;
 		try {  // 해당 번호의 게시물 조회
 			entry = new ResponseEntity<BoardDTO>(boardService.getArticle(bno), HttpStatus.OK);
-			log.info(entry);
 			
 		} catch(Exception e) {  // 조회 실패할 경우
 			e.printStackTrace();
@@ -147,7 +143,6 @@ public class BoardRestController {
 		ResponseEntity<BoardDTO> entry = null;
 		try {  // 수정할 게시물 기존 내용 조회
 			entry = new ResponseEntity<BoardDTO>(boardService.getDetail(bno), HttpStatus.OK);
-			log.info(entry);
 			
 		} catch(Exception e) {  // 수정 실패할 경우
 			e.printStackTrace();

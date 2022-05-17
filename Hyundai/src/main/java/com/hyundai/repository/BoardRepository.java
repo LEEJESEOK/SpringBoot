@@ -9,12 +9,12 @@ import com.hyundai.entity.Criteria;
 import com.hyundai.entity.UploadResultDTO;
 
 /**
- * 게시판 관련 DAO
+ * 게시판 관련 Repository
  * @author 이지은
  *
  */
 @Mapper
-public interface BoardDAO {
+public interface BoardRepository {
 	
 	void insertArticle(BoardDTO boardDTO);  // 게시물 등록 
 	void insertFile(UploadResultDTO uploadResultDTO);  // 첨부 파일 등록
