@@ -4,15 +4,52 @@
     <th:block th:fragment="content">
         <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
         <script>
+            let isDuplCheck = false;
+
             $().ready(function () {
+                // id 수정할 때 중복검사
+                $("#id").change(function () {
+                    isDuplCheck = false;
+                    console.log($("#id").val());
+
+                    // 비어있으면 중복검사 생략
+                    if ($("#id").val() == "") {
+                        $("#id").attr('class', 'form-control');
+                        return;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/isDuplicate",
+                        data: JSON.stringify({
+                            email: $("#id").val()
+                        }),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.result == "true") {
+                                $("#id").attr('class', 'form-control border-danger');
+                            } else {
+                                $("#id").attr('class', 'form-control border-success');
+
+                                isDuplCheck = true;
+                            }
+                        },
+                        error: function (request, status, error) {
+                            let message = "code : " + request + "\n";
+                            message += "message : " + request.responseText + "\n";
+                            message += "error : " + error;
+
+                            alert(message);
+                        }
+                    })
+                });
 
                 $("#signupBtn").click(function () {
-                    console.log(JSON.stringify({
-                        email: $("#id").val(),
-                        password: $("#password").val(),
-                        name: $("#name").val()
-                    }));
-
+                    if (isDuplCheck == false) {
+                        alert("아이디가 중복되었습니다.");
+                        return;
+                    }
                     $.ajax({
                         type: "POST",
                         url: "/signup",
@@ -40,8 +77,8 @@
             });
         </script>
         <div class="container container-sm" style="width: 40%;">
-            <h1 class="mb-1 text-center">Sign up</h1>
-            <div id="signinForm">
+            <h1 class="m-lg-5 text-center">Sign up</h1>
+            <div class="form-group" id="signinForm">
                 <p class="form-row">
                     <label for="id">id</label>
                     <input autofocus class="form-control" id="id" name="id">

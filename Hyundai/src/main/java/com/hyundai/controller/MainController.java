@@ -1,7 +1,9 @@
 package com.hyundai.controller;
 
 import com.hyundai.security.dto.AuthUserDTO;
+import com.hyundai.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Log4j2
 public class MainController {
+    @Autowired
+    UserService userService;
+
     @RequestMapping("")
     public String root() {
         return "main";
@@ -31,6 +36,7 @@ public class MainController {
     public String profile(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
         model.addAttribute("authUser", authUserDTO);
         log.info("model : " + model);
+        model.addAttribute("user", userService.getUserInfoByEmail(authUserDTO.getUsername()));
         return "profile";
     }
 
@@ -42,5 +48,10 @@ public class MainController {
     @GetMapping("/signup")
     public String signupForm() {
         return "signup";
+    }
+
+    @RequestMapping("/signupComplete")
+    public String signupComplete() {
+        return "signupComplete";
     }
 }
