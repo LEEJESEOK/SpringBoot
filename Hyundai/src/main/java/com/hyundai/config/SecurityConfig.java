@@ -51,14 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // 테스트용 계정
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication().passwordEncoder(encoder)
-                .withUser("test")
-                .password(encoder.encode("1111"))
-                .roles(UserRole.USER.name());
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        auth.inMemoryAuthentication().passwordEncoder(encoder)
+//                .withUser("test")
+//                .password(encoder.encode("1111"))
+//                .roles(UserRole.USER.name());
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
