@@ -41,7 +41,7 @@ public class BoardController {
 	 * 이지은, 이제석 작성
 	 * 게시물 등록 페이지
 	 */
-	@PreAuthorize("hasRole('ROLE_USER')")  // 권한 확인
+	@PreAuthorize("isAuthenticated()")  // 권한 확인
 	@GetMapping("/board/insert")
 	public String insert(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
 		

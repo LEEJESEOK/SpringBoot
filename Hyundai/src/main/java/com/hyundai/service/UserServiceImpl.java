@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signin(User user) {
+    public boolean signup(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.insertUser(user);

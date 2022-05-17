@@ -1,9 +1,6 @@
 package com.hyundai.service;
 
 import com.hyundai.entity.User;
-import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 /**
  * @author LEE JESEOK
@@ -16,7 +13,7 @@ public interface UserService {
      * @param user
      * @return 성공 여부
      */
-    boolean signin(User user);
+    boolean signup(User user);
 
 
     /**

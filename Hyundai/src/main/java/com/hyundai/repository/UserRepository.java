@@ -8,7 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * User SQL 처리
+ * User DAO<br>
+ * tbl_user, tbl_user_role_set
  *
  * @author LEE JESEOK
  */

@@ -11,6 +11,9 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * 사용자 인증 DTO<br>
+ * 이메일, 비밀번호, 이름, 소셜 로그인 구분, OAuth2 속성
+ *
  * @author LEE JESEOK
  */
 @Getter

@@ -8,7 +8,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 사용자 정보 저장하는 클래스
+ * 사용자 정보 저장하는 클래스<br>
+ * 이메일(ID), 비밀번호, 이름, 생성일, 소셜 로그인 구분, 계정 상태<br>
  *
  * @author LEE JESEOK
  */
