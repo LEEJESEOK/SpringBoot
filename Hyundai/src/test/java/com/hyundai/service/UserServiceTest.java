@@ -47,7 +47,7 @@ class UserServiceTest {
         user.setName(name);
         user.setSocial(0);
 
-        assertTrue(userService.signin(user));
+        assertTrue(userService.signup(user));
     }
 
     @Order(10)

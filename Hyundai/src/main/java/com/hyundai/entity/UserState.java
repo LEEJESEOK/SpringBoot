@@ -1,7 +1,8 @@
 package com.hyundai.entity;
 
 /**
- * 사용자 계정 상태
+ * 사용자 계정 상태<br>
+ * 미적용
  *
  * @author LEE JESEOK
  */

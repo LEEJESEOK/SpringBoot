@@ -31,7 +31,7 @@ public class MainController {
         return "redirect:/";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
         model.addAttribute("authUser", authUserDTO);

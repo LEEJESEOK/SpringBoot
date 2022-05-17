@@ -21,6 +21,12 @@ public class UserRestController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    /**
+     * email 중복 여부 확인
+     *
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/isDuplicate", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> isDuplicate(@RequestBody Map<String, Object> params) {
@@ -32,7 +38,7 @@ public class UserRestController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> signin(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> signup(@RequestBody Map<String, Object> params) {
         for (String key : params.keySet())
             log.info(key + " : " + params.get(key));
 
@@ -43,7 +49,7 @@ public class UserRestController {
 
 
         Map<String, Object> result = new HashMap<>();
-        result.put("result", userService.signin(user) ? "success" : "fail");
+        result.put("result", userService.signup(user) ? "success" : "fail");
         return result;
     }
 
