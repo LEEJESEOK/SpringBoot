@@ -62,11 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 로그인 성공시 루트로 이동
-        // 소셜 로그인 success handler 등록
-        // 로그아웃 설정
-        // csrf 설정
-        // 1주일 remember-me 설정
+
         /**
          * 로그인 - 로그인 페이지 적용 /login
          *         로그인 요청 url /login - POST
@@ -74,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * oauth2Login - 로그인 페이지 적용 /login
          *               로그인 성공시 목록으로 이동
          * logout - 성공시 목록으로 이동
-         * rememberMe -
-         *
+         * rememberMe - 자동 로그인 적용
+         *              1주일 = 60초 * 60분 * 24시간 * 7일
          */
         http.formLogin()
                 .loginPage("/login")
