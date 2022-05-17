@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * OAuth 사용자 서비스
+ *
  * @author LEE JESEOK
  */
 @Service

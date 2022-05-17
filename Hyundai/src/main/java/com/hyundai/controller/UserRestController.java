@@ -36,6 +36,12 @@ public class UserRestController {
         return result;
     }
 
+    /**
+     * 회원가입
+     *
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> signup(@RequestBody Map<String, Object> params) {
@@ -53,6 +59,12 @@ public class UserRestController {
         return result;
     }
 
+    /**
+     * 회원정보 수정
+     *
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> updateUser(@RequestBody Map<String, Object> params) {

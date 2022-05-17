@@ -15,6 +15,7 @@ import java.io.IOException;
 
 /**
  * @author LEE JESEOK
+ * @deprecated
  */
 @Log4j2
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {

@@ -50,7 +50,7 @@ public class BoardControllerTests {
 	@DisplayName("게시물 조회 페이지 테스트")
 	@Test
 	public void testDetail() throws Exception {
-		mvc.perform(get("/board/detail").param("bno", "4"))
+		mvc.perform(get("/board/detail").param("bno", "12"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("board/detail"))
 			.andDo(print());

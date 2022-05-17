@@ -5,7 +5,6 @@ import com.hyundai.entity.UserRoleSet;
 import com.hyundai.repository.UserRepository;
 import com.hyundai.security.dto.AuthUserDTO;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * DB 등록 사용자 서비스
+ *
  * @author LEE JESEOK
  */
 @Service

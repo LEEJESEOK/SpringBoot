@@ -74,7 +74,8 @@ public interface UserRepository {
     int updateUserRoleSet(UserRoleSet userRoleSet);
 
     /**
-     * email에 해당하는 User 삭제
+     * email에 해당하는 User 삭제<br>
+     * on delete cascade 옵션으로 user_role_set 함께 삭제
      *
      * @param email
      * @return 1: 정상적으로 삭제

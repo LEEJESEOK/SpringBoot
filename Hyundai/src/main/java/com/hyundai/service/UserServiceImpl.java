@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
+ * UserService 구현 클래스
+ *
  * @author LEE JESEOK
  */
 @Service

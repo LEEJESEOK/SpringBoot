@@ -21,16 +21,19 @@ public class MainController {
     @Autowired
     UserService userService;
 
+    // 메인화면
     @RequestMapping("")
     public String root() {
         return "main";
     }
 
+    // 메인화면으로 리다이렉트
     @RequestMapping("/main")
     public String main() {
         return "redirect:/";
     }
 
+    // 사용자 정보 페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal AuthUserDTO authUserDTO, Model model) {
@@ -40,16 +43,19 @@ public class MainController {
         return "profile";
     }
 
+    // 로그인 페이지
     @GetMapping("/login")
     public String loginForm() {
         return "login";
     }
 
+    // 회원가입 페이지
     @GetMapping("/signup")
     public String signupForm() {
         return "signup";
     }
 
+    // 회원가입 완료 페이지
     @RequestMapping("/signupComplete")
     public String signupComplete() {
         return "signupComplete";
